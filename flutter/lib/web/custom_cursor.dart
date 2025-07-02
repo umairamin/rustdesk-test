@@ -111,7 +111,7 @@ MouseCursor buildCursorOfCache(
       if (data == null) {
         return MouseCursor.defer;
       }
-      debugPrint(
+      println!(
           "Register custom cursor with key $key (${cache.hotx},${cache.hoty})");
       CursorManager.instance.registerCursor(CursorData(
           key: key,

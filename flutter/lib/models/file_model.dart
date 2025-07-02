@@ -265,7 +265,7 @@ class FileModel {
         isRemote: false,
       );
     } catch (e) {
-      debugPrint("Failed to decode onSelectedFiles: $e");
+      println!("Failed to decode onSelectedFiles: $e");
     }
   }
 
@@ -274,7 +274,7 @@ class FileModel {
     try {
       emptyDirs = jsonDecode(obj['dirs'] as String);
     } catch (e) {
-      debugPrint("Failed to decode sendEmptyDirs: $e");
+      println!("Failed to decode sendEmptyDirs: $e");
     }
     final otherSideData = remoteController.directoryData();
     final toPath = otherSideData.directory.path;
@@ -429,7 +429,7 @@ class FileController {
       fd.format(isWindows, sort: sortBy.value);
       directory.value = fd;
     } catch (e) {
-      debugPrint("Failed to openDirectory $path: $e");
+      println!("Failed to openDirectory $path: $e");
     }
   }
 
@@ -488,16 +488,16 @@ class FileController {
           }
           job.totalSize = totalSize;
           job.fileCount = fileCount;
-          debugPrint("update receive details: ${fd.path}");
+          println!("update receive details: ${fd.path}");
           jobController.jobTable.refresh();
         }
       } else if (options.value.home.isEmpty) {
         options.value.home = fd.path;
-        debugPrint("init remote home: ${fd.path}");
+        println!("init remote home: ${fd.path}");
         directory.value = fd;
       }
     } catch (e) {
-      debugPrint("initDirAndHome err=$e");
+      println!("initDirAndHome err=$e");
     }
   }
 
@@ -526,7 +526,7 @@ class FileController {
           includeHidden: showHidden,
           isRemote: isRemoteToLocal,
           isDir: from.isDirectory);
-      debugPrint(
+      println!(
           "path: ${from.path}, toPath: $toPath, to: ${PathUtil.join(toPath, from.name, isWindows)}");
     }
 
@@ -573,7 +573,7 @@ class FileController {
   Future<void> removeAction(SelectedItems items) async {
     _removeCheckboxRemember = false;
     if (items.isLocal != isLocal) {
-      debugPrint("Failed to removeFile, wrong files");
+      println!("Failed to removeFile, wrong files");
       return;
     }
     final isWindows = options.value.isWindows;
@@ -916,7 +916,7 @@ class JobController {
         jobTable.refresh();
       }
     } catch (e) {
-      debugPrint("Failed to tryUpdateJobProgress, evt: ${evt.toString()}");
+      println!("Failed to tryUpdateJobProgress, evt: ${evt.toString()}");
     }
   }
 
@@ -1002,7 +1002,7 @@ class JobController {
         }
       }
     }
-    debugPrint("jobError $evt");
+    println!("jobError $evt");
   }
 
   void updateJobStatus(int id,
@@ -1032,7 +1032,7 @@ class JobController {
   }
 
   void loadLastJob(Map<String, dynamic> evt) {
-    debugPrint("load last job: $evt");
+    println!("load last job: $evt");
     Map<String, dynamic> jobDetail = json.decode(evt['value']);
     // int id = int.parse(jobDetail['id']);
     String remote = jobDetail['remote'];
@@ -1074,7 +1074,7 @@ class JobController {
       job.state = JobState.inProgress;
       jobTable.refresh();
     } else {
-      debugPrint("jobId $jobId is not exists");
+      println!("jobId $jobId is not exists");
     }
   }
 
@@ -1091,7 +1091,7 @@ class JobController {
       job.totalSize = total_size.toInt();
       jobTable.refresh();
     }
-    debugPrint("update folder files: $info");
+    println!("update folder files: $info");
   }
 }
 
@@ -1212,7 +1212,7 @@ class FileFetcher {
 
       completer?.complete(fds);
     } catch (e) {
-      debugPrint("tryCompleteJob err: $e");
+      println!("tryCompleteJob err: $e");
     }
   }
 
@@ -1235,7 +1235,7 @@ class FileFetcher {
         completer?.complete(fd);
       }
     } catch (e) {
-      debugPrint("tryCompleteJob err: $e");
+      println!("tryCompleteJob err: $e");
     }
   }
 
@@ -1721,7 +1721,7 @@ class _FileDialogEvent extends BaseEvent<FileDialogType, Map<String, dynamic>> {
               overrideConfirm: _overrideConfirm, skip: _skip);
         };
       default:
-        debugPrint("Unknown event type: $type with $data");
+        println!("Unknown event type: $type with $data");
         return null;
     }
   }
@@ -1738,7 +1738,7 @@ class FileDialogEventLoop
     var event = evt as _FileDialogEvent;
     event.setOverrideConfirm(_overrideConfirm);
     event.setSkip(_skip);
-    debugPrint(
+    println!(
         "FileDialogEventLoop: consuming<jobId: ${evt.data['id']} overrideConfirm: $_overrideConfirm, skip: $_skip>");
   }
 

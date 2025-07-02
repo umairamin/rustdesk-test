@@ -57,7 +57,7 @@ class _FileManagerTabPageState extends State<FileManagerTabPage> {
     super.initState();
 
     rustDeskWinManager.setMethodHandler((call, fromWindowId) async {
-      debugPrint(
+      println!(
           "[FileTransfer] call ${call.method} with args ${call.arguments} from window $fromWindowId to ${windowId()}");
       // for simplify, just replace connectionId
       if (call.method == kWindowEventNewFileTransfer) {

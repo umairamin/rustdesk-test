@@ -41,7 +41,7 @@ Future<void> main(List<String> args) async {
   earlyAssert();
   WidgetsFlutterBinding.ensureInitialized();
 
-  debugPrint("launch args: $args");
+  println!("launch args: $args");
   kBootArgs = List.from(args);
 
   if (!isDesktop) {
@@ -102,7 +102,7 @@ Future<void> main(List<String> args) async {
         break;
     }
   } else if (args.isNotEmpty && args.first == '--cm') {
-    debugPrint("--cm started");
+    println!("--cm started");
     desktopType = DesktopType.cm;
     await windowManager.ensureInitialized();
     runConnectionManagerScreen();
@@ -155,7 +155,7 @@ void runMainApp(bool startService) async {
     await restoreWindowPosition(WindowType.Main);
     // Check the startup argument, if we successfully handle the argument, we keep the main window hidden.
     final handledByUniLinks = await initUniLinks();
-    debugPrint("handled by uni links: $handledByUniLinks");
+    println!("handled by uni links: $handledByUniLinks");
     if (handledByUniLinks || handleUriLink(cmdArgs: kBootArgs)) {
       windowManager.hide();
     } else {

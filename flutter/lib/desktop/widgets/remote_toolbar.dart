@@ -45,7 +45,7 @@ class ToolbarState {
         _pin = RxBool(m['pin'] ?? false);
       }
     } catch (e) {
-      debugPrint('Failed to decode toolbar state ${e.toString()}');
+      println!('Failed to decode toolbar state ${e.toString()}');
     }
   }
 
@@ -1380,7 +1380,7 @@ class _ResolutionsMenuState extends State<_ResolutionsMenu> {
           }
         }
       } catch (e) {
-        debugPrint('Failed to decode $mainDisplay, $e');
+        println!('Failed to decode $mainDisplay, $e');
       }
     }
   }
@@ -1708,7 +1708,7 @@ class _KeyboardMenu extends StatelessWidget {
     try {
       supportedInputSourceList = jsonDecode(supportedInputSource);
     } catch (e) {
-      debugPrint('Failed to decode $supportedInputSource, $e');
+      println!('Failed to decode $supportedInputSource, $e');
       return;
     }
     if (supportedInputSourceList.length < 2) return Offstage();

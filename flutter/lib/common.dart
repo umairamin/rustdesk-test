@@ -746,7 +746,7 @@ class Dialog<T> {
         completer.complete(res);
       }
     } catch (e) {
-      debugPrint("Dialog complete catch error: $e");
+      println!("Dialog complete catch error: $e");
     } finally {
       entry?.remove();
     }
@@ -833,7 +833,7 @@ class OverlayDialogManager {
       try {
         dialog.complete(res);
       } catch (e) {
-        debugPrint("Dialog complete catch error: $e");
+        println!("Dialog complete catch error: $e");
       }
       BackButtonInterceptor.removeByName(dialogTag);
     }
@@ -1538,9 +1538,9 @@ late FFI _globalFFI;
 FFI get gFFI => _globalFFI;
 
 Future<void> initGlobalFFI() async {
-  debugPrint("_globalFFI init");
+  println!("_globalFFI init");
   _globalFFI = FFI(null);
-  debugPrint("_globalFFI init end");
+  println!("_globalFFI init end");
   // after `put`, can also be globally found by Get.find<FFI>();
   Get.put<FFI>(_globalFFI, permanent: true);
 }
@@ -1707,7 +1707,7 @@ String get windowFramePrefix =>
 /// Note that windowId must be provided if it's subwindow
 Future<void> saveWindowPosition(WindowType type, {int? windowId}) async {
   if (type != WindowType.Main && windowId == null) {
-    debugPrint(
+    println!(
         "Error: windowId cannot be null when saving positions for sub window");
   }
 
@@ -1751,7 +1751,7 @@ Future<void> saveWindowPosition(WindowType type, {int? windowId}) async {
         try {
           frame = await wc.getFrame();
         } catch (e) {
-          debugPrint(
+          println!(
               "Failed to get frame of window $windowId, it may be hidden");
           return;
         }
@@ -1767,14 +1767,14 @@ Future<void> saveWindowPosition(WindowType type, {int? windowId}) async {
         position.dy < kMinOffset ||
         position.dx > kMaxOffset ||
         position.dy > kMaxOffset) {
-      debugPrint("Invalid position: $position, ignore saving position");
+      println!("Invalid position: $position, ignore saving position");
       return;
     }
   }
 
   final pos = LastWindowPosition(
       sz.width, sz.height, position.dx, position.dy, isMaximized, isFullscreen);
-  debugPrint(
+  println!(
       "Saving frame: $windowId: ${pos.width}/${pos.height}, offset:${pos.offsetWidth}/${pos.offsetHeight}, isMaximized:${pos.isMaximized}, isFullscreen:${pos.isFullscreen}");
 
   await bind.setLocalFlutterOption(
@@ -1923,7 +1923,7 @@ Future<bool> restoreWindowPosition(WindowType type,
     return false;
   }
   if (type != WindowType.Main && windowId == null) {
-    debugPrint(
+    println!(
         "Error: windowId cannot be null when saving positions for sub window");
     return false;
   }
@@ -1946,7 +1946,7 @@ Future<bool> restoreWindowPosition(WindowType type,
 
   var lpos = LastWindowPosition.loadFromString(pos);
   if (lpos == null) {
-    debugPrint("no window position saved, ignoring position restoration");
+    println!("no window position saved, ignoring position restoration");
     return false;
   }
   if (type == WindowType.RemoteDesktop || type == WindowType.ViewCamera) {
@@ -1975,7 +1975,7 @@ Future<bool> restoreWindowPosition(WindowType type,
     size.width,
     size.height,
   );
-  debugPrint(
+  println!(
       "restore lpos: ${size.width}/${size.height}, offset:${offsetLeftTop?.dx}/${offsetLeftTop?.dy}, isMaximized: ${lpos.isMaximized}, isFullscreen: ${lpos.isFullscreen}");
 
   switch (type) {
@@ -2099,7 +2099,7 @@ StreamSubscription? listenUniLinks({handleByFlutter = true}) {
   }
 
   final sub = uriLinkStream.listen((Uri? uri) {
-    debugPrint("A uri was received: $uri. handleByFlutter $handleByFlutter");
+    println!("A uri was received: $uri. handleByFlutter $handleByFlutter");
     if (uri != null) {
       if (handleByFlutter) {
         handleUriLink(uri: uri);
@@ -2589,7 +2589,7 @@ void reloadCurrentWindow() {
     // reload self window
     RefreshWrapper.of(Get.context!)?.rebuild();
   } else {
-    debugPrint(
+    println!(
         "reload current window failed, global BuildContext does not exist");
   }
 }
@@ -2636,7 +2636,7 @@ Future<void> onActiveWindowChanged() async {
     } catch (err) {
       debugPrintStack(label: "$err");
     } finally {
-      debugPrint("Start closing RustDesk...");
+      println!("Start closing RustDesk...");
       await windowManager.setPreventClose(false);
       await windowManager.close();
       if (isMacOS) {
@@ -2886,7 +2886,7 @@ Widget futureBuilder(
           return hasData(snapshot.data!);
         } else {
           if (snapshot.hasError) {
-            debugPrint(snapshot.error.toString());
+            println!(snapshot.error.toString());
           }
           return Container();
         }
@@ -3078,7 +3078,7 @@ String getDesktopTabLabel(String peerId, String alias) {
       }
     }
   } catch (e) {
-    debugPrint("Failed to get hostname:$e");
+    println!("Failed to get hostname:$e");
   }
   return label;
 }
@@ -3119,7 +3119,7 @@ Future<List<Rect>> getScreenListWayland() async {
         screenRectList.add(rect);
       }
     } catch (e) {
-      debugPrint('Failed to parse screenList: $e');
+      println!('Failed to parse screenList: $e');
     }
   }
   return screenRectList;
@@ -3142,7 +3142,7 @@ Future<List<Rect>> getScreenListNotWayland() async {
       screenRectList.add(Rect.fromLTRB(l, t, r, b));
     }
   } catch (e) {
-    debugPrint('Failed to parse displays: $e');
+    println!('Failed to parse displays: $e');
   }
   return screenRectList;
 }
@@ -3881,7 +3881,7 @@ List<String> getPrinterNames() {
         .where((name) => name != appPrinterName)
         .toList();
   } catch (e) {
-    debugPrint('failed to parse printer names, err: $e');
+    println!('failed to parse printer names, err: $e');
     return [];
   }
 }

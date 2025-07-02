@@ -67,7 +67,7 @@ class _PortForwardPageState extends State<PortForwardPage>
         connToken: widget.connToken,
         isRdp: widget.isRDP);
     Get.put<FFI>(_ffi, tag: 'pf_${widget.id}');
-    debugPrint("Port forward page init success with id ${widget.id}");
+    println!("Port forward page init success with id ${widget.id}");
     // Call onSelected in post frame callback, since we cannot guarantee that the callback will not call setState.
     WidgetsBinding.instance.addPostFrameCallback((_) {
       widget.tabController.onSelected?.call(widget.id);

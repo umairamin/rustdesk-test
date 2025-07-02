@@ -33,7 +33,7 @@ class _PixelbufferTexture {
         ffi.textureModel.setRgbaTextureId(display: d, id: id);
         final ptr = await textureRenderer.getTexturePtr(_textureKey);
         platformFFI.registerPixelbufferTexture(sessionId, display, ptr);
-        debugPrint(
+        println!(
             "create pixelbuffer texture: peerId: ${ffi.id} display:$_display, textureId:$id, texturePtr:$ptr");
       }
     });
@@ -50,7 +50,7 @@ class _PixelbufferTexture {
       await textureRenderer.closeTexture(_textureKey);
       _textureKey = -1;
       _destroying = false;
-      debugPrint(
+      println!(
           "destroy pixelbuffer texture: peerId: ${ffi.id} display:$_display, textureId:$_id");
     }
   }
@@ -86,11 +86,11 @@ class _GpuTexture {
           if (output != null) {
             platformFFI.registerGpuTexture(sessionId, d, output);
           }
-          debugPrint(
+          println!(
               "create gpu texture: peerId: ${ffi.id} display:$_display, textureId:$id, output:$output");
         }
       }, onError: (err) {
-        debugPrint("Failed to register gpu texture:$err");
+        println!("Failed to register gpu texture:$err");
       });
     }
   }
@@ -107,7 +107,7 @@ class _GpuTexture {
       await gpuTextureRenderer.unregisterTexture(_textureId);
       _textureId = -1;
       _destroying = false;
-      debugPrint(
+      println!(
           "destroy gpu texture: peerId: ${ffi.id} display:$_display, textureId:$_id, output:$_output");
     }
   }
@@ -148,7 +148,7 @@ class TextureModel {
   TextureModel(this.parent);
 
   setTextureType({required int display, required bool gpuTexture}) {
-    debugPrint("setTextureType: display=$display, isGpuTexture=$gpuTexture");
+    println!("setTextureType: display=$display, isGpuTexture=$gpuTexture");
     ensureControl(display);
     _control[display]?.setTextureType(gpuTexture: gpuTexture);
     // For versions that do not support multiple displays, the display parameter is always 0, need set type of current display
@@ -157,7 +157,7 @@ class TextureModel {
     if (!ffi.ffiModel.pi.isSupportMultiDisplay) {
       final currentDisplay = CurrentDisplayState.find(ffi.id).value;
       if (currentDisplay != display) {
-        debugPrint(
+        println!(
             "setTextureType: currentDisplay=$currentDisplay, isGpuTexture=$gpuTexture");
         ensureControl(currentDisplay);
         _control[currentDisplay]?.setTextureType(gpuTexture: gpuTexture);

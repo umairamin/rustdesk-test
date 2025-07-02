@@ -14,7 +14,7 @@ class RefreshWrapper extends StatefulWidget {
   static RefreshWrapperState? of(BuildContext context) {
     final state = context.findAncestorStateOfType<RefreshWrapperState>();
     if (state == null) {
-      debugPrint(
+      println!(
           "RefreshWrapperState not exists in this context, perhaps RefreshWrapper is not exists?");
     }
     return state;
@@ -28,7 +28,7 @@ class RefreshWrapperState extends State<RefreshWrapper> {
   }
 
   rebuild() {
-    debugPrint("=====Global State Rebuild (win-${kWindowId ?? 'main'})=====");
+    println!("=====Global State Rebuild (win-${kWindowId ?? 'main'})=====");
     if (Get.context != null) {
       (context as Element).visitChildren(_rebuildElement);
     }

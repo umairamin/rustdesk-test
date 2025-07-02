@@ -105,7 +105,7 @@ class _FileManagerPageState extends State<FileManagerPage>
     if (isWeb) {
       _ffi.ffiModel.updateEventListener(_ffi.sessionId, widget.id);
     }
-    debugPrint("File manager page init success with id ${widget.id}");
+    println!("File manager page init success with id ${widget.id}");
     _ffi.dialogManager.setOverlayState(_overlayKeyState);
     // Call onSelected in post frame callback, since we cannot guarantee that the callback will not call setState.
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -481,7 +481,7 @@ class _FileManagerViewState extends State<FileManagerView> {
   }
 
   void onLocationFocusChanged() {
-    debugPrint("focus changed on local");
+    println!("focus changed on local");
     if (_locationNode.hasFocus) {
       // ignore
     } else {
@@ -1031,7 +1031,7 @@ class _FileManagerViewState extends State<FileManagerView> {
       node: _keyboardNode,
       buffer: _listSearchBuffer,
       onNext: (buffer) {
-        debugPrint("searching next for $buffer");
+        println!("searching next for $buffer");
         assert(buffer.length == 1);
         assert(selectedItems.items.length <= 1);
         var skipCount = 0;
@@ -1047,7 +1047,7 @@ class _FileManagerViewState extends State<FileManagerView> {
             .where((element) => element.name.toLowerCase().startsWith(buffer));
         if (searchResult.isEmpty) {
           // cannot find next, lets restart search from head
-          debugPrint("restart search from head");
+          println!("restart search from head");
           searchResult = entries.where(
               (element) => element.name.toLowerCase().startsWith(buffer));
         }
@@ -1059,7 +1059,7 @@ class _FileManagerViewState extends State<FileManagerView> {
             kDesktopFileTransferRowHeight);
       },
       onSearch: (buffer) {
-        debugPrint("searching for $buffer");
+        println!("searching for $buffer");
         final selectedEntries = selectedItems;
         final searchResult = entries
             .where((element) => element.name.toLowerCase().startsWith(buffer));
@@ -1297,7 +1297,7 @@ class _FileManagerViewState extends State<FileManagerView> {
     final entries = controller.directory.value.entries;
     final index = entries.indexOf(entry);
     if (index == -1) {
-      debugPrint("entry is not valid: ${entry.path}");
+      println!("entry is not valid: ${entry.path}");
     }
     final selectedEntries = selectedItems;
     final searchResult = entries.where((element) => element == entry);
@@ -1311,7 +1311,7 @@ class _FileManagerViewState extends State<FileManagerView> {
         scrollController.position.maxScrollExtent);
     scrollController.jumpTo(offset);
     selectedEntries.add(searchResult.first);
-    debugPrint("focused on ${searchResult.first.name}");
+    println!("focused on ${searchResult.first.name}");
   }
 
   void _onSelectedChanged(SelectedItems selectedItems, List<Entry> entries,
@@ -1550,7 +1550,7 @@ class _FileManagerViewState extends State<FileManagerView> {
                         }
                         menuItems.add(MenuEntryDivider());
                       } catch (e) {
-                        debugPrint("buildBread fetchDirectory err=$e");
+                        println!("buildBread fetchDirectory err=$e");
                       } finally {
                         if (!isLocal) {
                           _ffi.dialogManager.dismissByTag(loadingTag);

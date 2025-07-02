@@ -7,7 +7,7 @@ use librustdesk::*;
 
 #[cfg(debug_assertions)]
 #[allow(non_snake_case)]
-fn debugPrint(s: &str) {
+fn println!(s: &str) {
     println!("[debugPrint] {}", s);
 }
 

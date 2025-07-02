@@ -196,7 +196,7 @@ class _PeerTabPageState extends State<PeerTabPage>
       if (model.visibleEnabledOrderedIndexs.contains(model.currentTab)) {
         child = entries[model.currentTab].widget;
       } else {
-        debugPrint("should not happen! currentTab not in visibleIndexs");
+        println!("should not happen! currentTab not in visibleIndexs");
         Future.delayed(Duration.zero, () {
           model.setCurrentTab(model.visibleEnabledOrderedIndexs[0]);
         });

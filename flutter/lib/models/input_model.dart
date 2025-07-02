@@ -1032,7 +1032,7 @@ class InputModel {
   }
 
   void onPointDownImage(PointerDownEvent e) {
-    debugPrint("onPointDownImage ${e.kind}");
+    println!("onPointDownImage ${e.kind}");
     _stopFling = true;
     if (isDesktop) _queryOtherWindowCoords = true;
     _remoteWindowCoords = [];
@@ -1089,7 +1089,7 @@ class InputModel {
       return frame;
     } catch (e) {
       // Unreachable code
-      debugPrint("Failed to get frame of window $kWindowId, it may be hidden");
+      println!("Failed to get frame of window $kWindowId, it may be hidden");
     }
     return null;
   }

@@ -124,7 +124,7 @@ class DesktopTabController {
       jumpTo(toIndex, callOnSelected: false);
     } catch (e) {
       // call before binding controller will throw
-      debugPrint("Failed to jumpTo: $e");
+      println!("Failed to jumpTo: $e");
     }
   }
 
@@ -350,7 +350,7 @@ class _DesktopTabState extends State<DesktopTab>
       } else {
         final wc = WindowController.fromWindowId(kWindowId!);
         wc.isMaximized().then((maximized) {
-          debugPrint("isMaximized $maximized");
+          println!("isMaximized $maximized");
           if (stateGlobal.isMaximized.value != maximized) {
             WidgetsBinding.instance.addPostFrameCallback(
                 (_) => setState(() => stateGlobal.setMaximized(maximized)));
@@ -430,7 +430,7 @@ class _DesktopTabState extends State<DesktopTab>
     mainWindowClose() async => await windowManager.hide();
     notMainWindowClose(WindowController windowController) async {
       if (controller.length != 0) {
-        debugPrint("close not empty multiwindow from taskbar");
+        println!("close not empty multiwindow from taskbar");
         if (isWindows) {
           await windowController.show();
           await windowController.focus();

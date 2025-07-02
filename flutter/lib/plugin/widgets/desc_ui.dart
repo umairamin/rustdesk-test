@@ -267,7 +267,7 @@ class PluginItem extends StatelessWidget {
           v = bind.pluginGetSessionOption(id: pluginId, peer: peerId, key: key);
         }
       } catch (e) {
-        debugPrint('Failed to get option "$key", $e');
+        println!('Failed to get option "$key", $e');
         v = null;
       }
     }
@@ -291,7 +291,7 @@ void handleReloading(Map<String, dynamic> evt) {
       addLocationUi(evt['location']!, evt['id']!, uiList);
     }
   } catch (e) {
-    debugPrint('Failed handleReloading, json decode of ui, $e ');
+    println!('Failed handleReloading, json decode of ui, $e ');
   }
 }
 

@@ -125,7 +125,7 @@ class AbModel {
     if (!gFFI.userModel.isLogin) return;
     if (gFFI.userModel.networkError.isNotEmpty) return;
     if (force == null && listInitialized && current.initialized) return;
-    debugPrint("pullAb, force: $force, quiet: $quiet");
+    println!("pullAb, force: $force, quiet: $quiet");
     if (!listInitialized || force == ForcePullAb.listAndCurrent) {
       try {
         // Read personal guid every time to avoid upgrading the server without closing the main window
@@ -137,7 +137,7 @@ class AbModel {
           await _getAbSettings();
         }
         if (_personalAbGuid != null) {
-          debugPrint("pull ab list");
+          println!("pull ab list");
           List<AbProfile> abProfiles = List.empty(growable: true);
           abProfiles.add(AbProfile(_personalAbGuid!, _personalAddressBookName,
               gFFI.userModel.userName.value, null, ShareRule.read.value));
@@ -181,14 +181,14 @@ class AbModel {
           }
         }
       } catch (e) {
-        debugPrint("pull ab list error: $e");
+        println!("pull ab list error: $e");
       }
     } else if (listInitialized &&
         (!current.initialized || force == ForcePullAb.current)) {
       try {
         await current.pullAb(quiet: quiet);
       } catch (e) {
-        debugPrint("pull current Ab error: $e");
+        println!("pull current Ab error: $e");
       }
     }
     _callbackPeerUpdate();
@@ -204,7 +204,7 @@ class AbModel {
       headers['Content-Type'] = "application/json";
       final resp = await http.post(Uri.parse(api), headers: headers);
       if (resp.statusCode == 404) {
-        debugPrint("HTTP 404, api server doesn't support shared address book");
+        println!("HTTP 404, api server doesn't support shared address book");
         return false;
       }
       Map<String, dynamic> json =
@@ -218,7 +218,7 @@ class AbModel {
       _maxPeerOneAb = json['max_peer_one_ab'] ?? 0;
       return true;
     } catch (err) {
-      debugPrint('get ab settings err: ${err.toString()}');
+      println!('get ab settings err: ${err.toString()}');
     }
     return false;
   }
@@ -230,7 +230,7 @@ class AbModel {
       headers['Content-Type'] = "application/json";
       final resp = await http.post(Uri.parse(api), headers: headers);
       if (resp.statusCode == 404) {
-        debugPrint("HTTP 404, current api server is legacy mode");
+        println!("HTTP 404, current api server is legacy mode");
         return false;
       }
       Map<String, dynamic> json =
@@ -244,7 +244,7 @@ class AbModel {
       _personalAbGuid = json['guid'];
       return true;
     } catch (err) {
-      debugPrint('get personal ab err: ${err.toString()}');
+      println!('get personal ab err: ${err.toString()}');
     }
     return false;
   }
@@ -298,7 +298,7 @@ class AbModel {
       } while (current * pageSize < total);
       return true;
     } catch (err) {
-      debugPrint('_getSharedAbProfiles err: ${err.toString()}');
+      println!('_getSharedAbProfiles err: ${err.toString()}');
     }
     return false;
   }
@@ -509,7 +509,7 @@ class AbModel {
         }
         return recents;
       } catch (e) {
-        debugPrint('getRecentPeers: $e');
+        println!('getRecentPeers: $e');
       }
       return [];
     }
@@ -518,12 +518,12 @@ class AbModel {
       if (!shouldSyncAb()) return;
       final recents = await getRecentPeers();
       if (recents.isEmpty) return;
-      debugPrint("sync from recent, len: ${recents.length}");
+      println!("sync from recent, len: ${recents.length}");
       if (current.canWrite() && current.initialized) {
         await current.syncFromRecent(recents);
       }
     } catch (e) {
-      debugPrint('_syncFromRecentWithoutLock: $e');
+      println!('_syncFromRecentWithoutLock: $e');
     }
   }
 
@@ -546,7 +546,7 @@ class AbModel {
       };
       bind.mainSaveAb(json: jsonEncode(m));
     } catch (e) {
-      debugPrint('ab save:$e');
+      println!('ab save:$e');
     }
   }
 
@@ -588,7 +588,7 @@ class AbModel {
       legacyMode.value = addressbooks.containsKey(_legacyAddressBookName);
       trySetCurrentToLast();
     } catch (e) {
-      debugPrint("load ab cache: $e");
+      println!("load ab cache: $e");
     }
   }
 
@@ -803,11 +803,11 @@ abstract class BaseAb {
       pullError.value = "";
     }
     initialized = false;
-    debugPrint("pull ab \"${name()}\"");
+    println!("pull ab \"${name()}\"");
     try {
       initialized = await pullAbImpl(quiet: quiet);
     } catch (e) {
-      debugPrint("Error occurred while pulling address book: $e");
+      println!("Error occurred while pulling address book: $e");
     } finally {
       abLoading.value = false;
       abPulling = false;
@@ -957,7 +957,7 @@ class LegacyAb extends BaseAb {
 
   Future<bool> pushAb(
       {bool toastIfFail = true, bool toastIfSucc = true}) async {
-    debugPrint("pushAb: toastIfFail:$toastIfFail, toastIfSucc:$toastIfSucc");
+    println!("pushAb: toastIfFail:$toastIfFail, toastIfSucc:$toastIfSucc");
     if (!gFFI.userModel.isLogin) return false;
     pushError.value = '';
     bool ret = false;
@@ -1501,7 +1501,7 @@ class Ab extends BaseAb {
       }
       return ret;
     } catch (err) {
-      debugPrint('changeTagForPeers err: ${err.toString()}');
+      println!('changeTagForPeers err: ${err.toString()}');
       return false;
     }
   }
@@ -1522,7 +1522,7 @@ class Ab extends BaseAb {
       }
       return true;
     } catch (err) {
-      debugPrint('changeAlias err: ${err.toString()}');
+      println!('changeAlias err: ${err.toString()}');
       return false;
     }
   }
@@ -1542,7 +1542,7 @@ class Ab extends BaseAb {
       }
       return true;
     } catch (err) {
-      debugPrint('changeSharedPassword err: ${err.toString()}');
+      println!('changeSharedPassword err: ${err.toString()}');
       return false;
     }
   }
@@ -1603,7 +1603,7 @@ class Ab extends BaseAb {
       final resp = await http.put(Uri.parse(api), headers: headers, body: body);
       final errMsg = _jsonDecodeActionResp(resp);
       if (errMsg.isNotEmpty) {
-        debugPrint('syncOnePeer errMsg: $errMsg');
+        println!('syncOnePeer errMsg: $errMsg');
         return false;
       }
       uiUpdate = true;
@@ -1626,7 +1626,7 @@ class Ab extends BaseAb {
         gFFI.abModel._saveCache();
       }
     } catch (err) {
-      debugPrint('syncFromRecent err: ${err.toString()}');
+      println!('syncFromRecent err: ${err.toString()}');
     }
   }
 
@@ -1647,7 +1647,7 @@ class Ab extends BaseAb {
       }
       return true;
     } catch (err) {
-      debugPrint('deletePeers err: ${err.toString()}');
+      println!('deletePeers err: ${err.toString()}');
       return false;
     }
   }
@@ -1678,7 +1678,7 @@ class Ab extends BaseAb {
       }
       return true;
     } catch (err) {
-      debugPrint('addTags err: ${err.toString()}');
+      println!('addTags err: ${err.toString()}');
       return false;
     }
   }
@@ -1707,7 +1707,7 @@ class Ab extends BaseAb {
       }
       return true;
     } catch (err) {
-      debugPrint('renameTag err: ${err.toString()}');
+      println!('renameTag err: ${err.toString()}');
       return false;
     }
   }
@@ -1731,7 +1731,7 @@ class Ab extends BaseAb {
       }
       return true;
     } catch (err) {
-      debugPrint('setTagColor err: ${err.toString()}');
+      println!('setTagColor err: ${err.toString()}');
       return false;
     }
   }
@@ -1752,7 +1752,7 @@ class Ab extends BaseAb {
       }
       return true;
     } catch (err) {
-      debugPrint('deleteTag err: ${err.toString()}');
+      println!('deleteTag err: ${err.toString()}');
       return false;
     }
   }

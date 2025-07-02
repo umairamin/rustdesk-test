@@ -394,7 +394,7 @@ class _FileManagerPageState extends State<FileManagerPage> {
     if (localSelectedItems.items.isNotEmpty &&
         remoteSelectedItems.items.isNotEmpty) {
       // assert unreachable
-      debugPrint("Wrong SelectedItems state, reset");
+      println!("Wrong SelectedItems state, reset");
       localSelectedItems.clear();
       remoteSelectedItems.clear();
     }

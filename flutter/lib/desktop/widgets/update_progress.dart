@@ -116,7 +116,7 @@ class UpdateProgressState extends State<UpdateProgress> {
   void _onError(String error) {
     cancelQueryTimer();
 
-    debugPrint('Download new version error: $error');
+    println!('Download new version error: $error');
     final msgBoxType = 'custom-nocancel-nook-hasclose';
     final msgBoxTitle = 'Error';
     final msgBoxText = 'download-new-version-failed-tip';
@@ -176,7 +176,7 @@ class UpdateProgressState extends State<UpdateProgress> {
         });
       } catch (e) {
         _getDataFailedCount += 1;
-        debugPrint(
+        println!(
             'Failed to get download data ${widget.downloadUrl}, error $e');
         if (_getDataFailedCount > 3) {
           err = e.toString();
@@ -202,7 +202,7 @@ class UpdateProgressState extends State<UpdateProgress> {
             '',
             gFFI.dialogManager,
             onSubmit: () {
-              debugPrint('Downloaded, update to new version now');
+              println!('Downloaded, update to new version now');
               bind.mainSetCommon(key: 'update-me', value: widget.downloadUrl);
             },
             submitTimeout: 5,

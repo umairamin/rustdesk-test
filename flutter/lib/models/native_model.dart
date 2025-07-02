@@ -61,7 +61,7 @@ class PlatformFFI {
 
   bool registerEventHandler(
       String eventName, String handlerName, HandleEvent handler, {bool replace = false}) {
-    debugPrint('registerEventHandler $eventName $handlerName');
+    println!('registerEventHandler $eventName $handlerName');
     var handlers = _eventHandlers[eventName];
     if (handlers == null) {
       _eventHandlers[eventName] = {handlerName: handler};
@@ -77,7 +77,7 @@ class PlatformFFI {
   }
 
   void unregisterEventHandler(String eventName, String handlerName) {
-    debugPrint('unregisterEventHandler $eventName $handlerName');
+    println!('unregisterEventHandler $eventName $handlerName');
     var handlers = _eventHandlers[eventName];
     if (handlers != null) {
       handlers.remove(handlerName);
@@ -130,14 +130,14 @@ class PlatformFFI {
                 //
                 // isMacOS? DynamicLibrary.open("liblibrustdesk.dylib") :
                 DynamicLibrary.process();
-    debugPrint('initializing FFI $_appType');
+    println!('initializing FFI $_appType');
     try {
       _session_get_rgba = dylib.lookupFunction<F3Dart, F3>("session_get_rgba");
       try {
         // SYSTEM user failed
         _dir = (await getApplicationDocumentsDirectory()).path;
       } catch (e) {
-        debugPrint('Failed to get documents directory: $e');
+        println!('Failed to get documents directory: $e');
       }
       _ffiBind = RustdeskImpl(dylib);
 
@@ -197,10 +197,10 @@ class PlatformFFI {
         id = macOsInfo.systemGUID ?? '';
       }
       if (isAndroid || isIOS) {
-        debugPrint(
+        println!(
             '_appType:$_appType,info1-id:$id,info2-name:$name,dir:$_dir,homeDir:$_homeDir');
       } else {
-        debugPrint(
+        println!(
             '_appType:$_appType,info1-id:$id,info2-name:$name,dir:$_dir');
       }
       if (desktopType == DesktopType.cm) {
@@ -251,7 +251,7 @@ class PlatformFFI {
             }
           }
         } catch (e) {
-          debugPrint('json.decode fail(): $e');
+          println!('json.decode fail(): $e');
         }
       }();
     });

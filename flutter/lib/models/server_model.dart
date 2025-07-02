@@ -158,7 +158,7 @@ class ServerModel with ChangeNotifier {
       if (desktopType == DesktopType.cm) {
         final res = await bind.cmCheckClientsLength(length: _clients.length);
         if (res != null) {
-          debugPrint("clients not match!");
+          println!("clients not match!");
           updateClientState(res);
         } else {
           if (_clients.isEmpty) {
@@ -360,30 +360,30 @@ class ServerModel with ChangeNotifier {
   }
 
   Future<bool> checkRequestNotificationPermission() async {
-    debugPrint("androidVersion $androidVersion");
+    println!("androidVersion $androidVersion");
     if (androidVersion < 33) {
       return true;
     }
     if (await AndroidPermissionManager.check(kAndroid13Notification)) {
-      debugPrint("notification permission already granted");
+      println!("notification permission already granted");
       return true;
     }
     var res = await AndroidPermissionManager.request(kAndroid13Notification);
-    debugPrint("notification permission request result: $res");
+    println!("notification permission request result: $res");
     return res;
   }
 
   Future<bool> checkFloatingWindowPermission() async {
-    debugPrint("androidVersion $androidVersion");
+    println!("androidVersion $androidVersion");
     if (androidVersion < 23) {
       return false;
     }
     if (await AndroidPermissionManager.check(kSystemAlertWindow)) {
-      debugPrint("alert window permission already granted");
+      println!("alert window permission already granted");
       return true;
     }
     var res = await AndroidPermissionManager.request(kSystemAlertWindow);
-    debugPrint("alert window permission request result: $res");
+    println!("alert window permission request result: $res");
     return res;
   }
 
@@ -492,7 +492,7 @@ class ServerModel with ChangeNotifier {
   }
 
   changeStatue(String name, bool value) {
-    debugPrint("changeStatue value $value");
+    println!("changeStatue value $value");
     switch (name) {
       case "media":
         _mediaOk = value;
@@ -522,7 +522,7 @@ class ServerModel with ChangeNotifier {
     try {
       clientsJson = jsonDecode(res);
     } catch (e) {
-      debugPrint("Failed to decode clientsJson: '$res', error $e");
+      println!("Failed to decode clientsJson: '$res', error $e");
       return;
     }
 
@@ -536,7 +536,7 @@ class ServerModel with ChangeNotifier {
         _clients.add(client);
         _addTab(client);
       } catch (e) {
-        debugPrint("Failed to decode clientJson '$clientJson', error $e");
+        println!("Failed to decode clientJson '$clientJson', error $e");
       }
     }
     if (desktopType == DesktopType.cm) {
@@ -585,7 +585,7 @@ class ServerModel with ChangeNotifier {
       if (isAndroid && !client.authorized) showLoginDialog(client);
       if (isAndroid) androidUpdatekeepScreenOn();
     } catch (e) {
-      debugPrint("Failed to call loginRequest,error:$e");
+      println!("Failed to call loginRequest,error:$e");
     }
   }
 
@@ -737,7 +737,7 @@ class ServerModel with ChangeNotifier {
       if (isAndroid) androidUpdatekeepScreenOn();
       notifyListeners();
     } catch (e) {
-      debugPrint("onClientRemove failed,error:$e");
+      println!("onClientRemove failed,error:$e");
     }
   }
 
@@ -781,7 +781,7 @@ class ServerModel with ChangeNotifier {
         notifyListeners();
       }
     } catch (e) {
-      debugPrint("updateVoiceCallState failed: $e");
+      println!("updateVoiceCallState failed: $e");
     }
   }
 

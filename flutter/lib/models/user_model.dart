@@ -75,7 +75,7 @@ class UserModel {
       final user = UserPayload.fromJson(data);
       _parseAndUpdateUser(user);
     } catch (e) {
-      debugPrint('Failed to refreshCurrentUser: $e');
+      println!('Failed to refreshCurrentUser: $e');
     } finally {
       refreshingUser = false;
       await updateOtherModels();
@@ -90,7 +90,7 @@ class UserModel {
     try {
       return json.decode(userInfo);
     } catch (e) {
-      debugPrint('Failed to get local user info "$userInfo": $e');
+      println!('Failed to get local user info "$userInfo": $e');
     }
     return null;
   }
@@ -145,7 +145,7 @@ class UserModel {
               headers: authHeaders)
           .timeout(Duration(seconds: 2));
     } catch (e) {
-      debugPrint("request /api/logout failed: err=$e");
+      println!("request /api/logout failed: err=$e");
     } finally {
       await reset(resetOther: true);
       gFFI.dialogManager.dismissByTag(tag);
@@ -162,7 +162,7 @@ class UserModel {
     try {
       body = jsonDecode(utf8.decode(resp.bodyBytes));
     } catch (e) {
-      debugPrint("login: jsonDecode resp body failed: ${e.toString()}");
+      println!("login: jsonDecode resp body failed: ${e.toString()}");
       if (resp.statusCode != 200) {
         BotToast.showText(
             contentColor: Colors.red, text: 'HTTP ${resp.statusCode}');
@@ -184,7 +184,7 @@ class UserModel {
     try {
       loginResponse = LoginResponse.fromJson(body);
     } catch (e) {
-      debugPrint("login: jsonDecode LoginResponse failed: ${e.toString()}");
+      println!("login: jsonDecode LoginResponse failed: ${e.toString()}");
       rethrow;
     }
 
@@ -216,7 +216,7 @@ class UserModel {
           .map((item) => {'name': item.substring('oidc/'.length)})
           .toList();
     } catch (e) {
-      debugPrint(
+      println!(
           "queryOidcLoginOptions: jsonDecode resp body failed: ${e.toString()}");
       return [];
     }

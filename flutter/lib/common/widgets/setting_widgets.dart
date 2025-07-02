@@ -195,7 +195,7 @@ List<Widget> ServerConfigImportExportWidgets(
             apiServer: controllers[2].text.trim(),
             key: controllers[3].text.trim())
         .encode();
-    debugPrint("ServerConfig export: $text");
+    println!("ServerConfig export: $text");
     Clipboard.setData(ClipboardData(text: text));
     showToast(translate('Export server configuration successfully'));
   }

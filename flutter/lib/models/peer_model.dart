@@ -273,7 +273,7 @@ class Peers extends ChangeNotifier {
         return Peer.fromJson(peer as Map<String, dynamic>);
       }).toList();
     } catch (e) {
-      debugPrint('peers(): $e');
+      println!('peers(): $e');
     }
     return [];
   }

@@ -168,7 +168,7 @@ class ConnectionManagerState extends State<ConnectionManager>
       if (serverModel.cmHiddenTimer != null) {
         serverModel.cmHiddenTimer!.cancel();
         serverModel.cmHiddenTimer = null;
-        debugPrint("CM hidden timer has been canceled");
+        println!("CM hidden timer has been canceled");
       }
     }
 

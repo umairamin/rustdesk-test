@@ -222,7 +222,7 @@ void checkService() async {
   if (AndroidPermissionManager.isWaitingFile() && !gFFI.serverModel.fileOk) {
     AndroidPermissionManager.complete(kManageExternalStorage,
         await AndroidPermissionManager.check(kManageExternalStorage));
-    debugPrint("file permission finished");
+    println!("file permission finished");
   }
 }
 
@@ -859,7 +859,7 @@ class ClientInfo extends StatelessWidget {
 
 void androidChannelInit() {
   gFFI.setMethodCallHandler((method, arguments) {
-    debugPrint("flutter got android msg,$method,$arguments");
+    println!("flutter got android msg,$method,$arguments");
     try {
       switch (method) {
         case "start_capture":
@@ -872,7 +872,7 @@ void androidChannelInit() {
           {
             var name = arguments["name"] as String;
             var value = arguments["value"] as String == "true";
-            debugPrint("from jvm:on_state_changed,$name:$value");
+            println!("from jvm:on_state_changed,$name:$value");
             gFFI.serverModel.changeStatue(name, value);
             break;
           }

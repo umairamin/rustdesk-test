@@ -55,7 +55,7 @@ class CmFileModel {
       }
       currentJobTable.refresh();
     } catch (e) {
-      debugPrint("onFileTransferLog:$e");
+      println!("onFileTransferLog:$e");
     }
   }
 
@@ -63,7 +63,7 @@ class CmFileModel {
     final data = TransferJobSerdeData.fromJson(l);
     var jobTable = _jobTables[data.connId];
     if (jobTable == null) {
-      debugPrint("jobTable should not be null");
+      println!("jobTable should not be null");
       return;
     }
     CmFileLog? job = jobTable.firstWhereOrNull((e) => e.id == data.id);
@@ -113,7 +113,7 @@ class CmFileModel {
           gFFI.serverModel.clients.firstWhereOrNull((e) => e.id == data.connId);
       var jobTable = _jobTables[data.connId];
       if (jobTable == null) {
-        debugPrint("jobTable should not be null");
+        println!("jobTable should not be null");
         return;
       }
       int removeUnreadCount = 0;
@@ -154,7 +154,7 @@ class CmFileModel {
       }
       jobTable.refresh();
     } catch (e) {
-      debugPrint('$e');
+      println!('$e');
     }
   }
 
@@ -164,7 +164,7 @@ class CmFileModel {
       FileActionLog data = FileActionLog.fromJson(d);
       var jobTable = _jobTables[data.connId];
       if (jobTable == null) {
-        debugPrint("jobTable should not be null");
+        println!("jobTable should not be null");
         return;
       }
       jobTable.add(CmFileLog()
@@ -175,7 +175,7 @@ class CmFileModel {
       _addUnread(data.connId);
       jobTable.refresh();
     } catch (e) {
-      debugPrint('$e');
+      println!('$e');
     }
   }
 
@@ -185,7 +185,7 @@ class CmFileModel {
       FileRenamenLog data = FileRenamenLog.fromJson(d);
       var jobTable = _jobTables[data.connId];
       if (jobTable == null) {
-        debugPrint("jobTable should not be null");
+        println!("jobTable should not be null");
         return;
       }
       final fileName = '${data.path} -> ${data.newName}';
@@ -197,7 +197,7 @@ class CmFileModel {
       _addUnread(data.connId);
       jobTable.refresh();
     } catch (e) {
-      debugPrint('$e');
+      println!('$e');
     }
   }
 

@@ -535,7 +535,7 @@ Future<bool?> loginDialog() async {
                       resp =
                           gFFI.userModel.getLoginResponseFromAuthBody(authBody);
                     } catch (e) {
-                      debugPrint(
+                      println!(
                           'Failed to parse oidc login body: "$authBody"');
                     }
                     close(true);

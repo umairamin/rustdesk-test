@@ -239,7 +239,7 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
   Future<bool> checkAndUpdateStartOnBoot() async {
     if (!await canStartOnBoot() && _enableStartOnBoot) {
       _enableStartOnBoot = false;
-      debugPrint(
+      println!(
           "checkAndUpdateStartOnBoot and set _enableStartOnBoot -> false");
       gFFI.invokeMethod(AndroidChannel.kSetStartOnBootOpt, false);
       return true;
