@@ -5,6 +5,12 @@
 
 use librustdesk::*;
 
+#[cfg(debug_assertions)]
+#[allow(non_snake_case)]
+fn debugPrint(s: &str) {
+    println!("[debugPrint] {}", s);
+}
+
 #[cfg(any(target_os = "android", target_os = "ios", feature = "flutter"))]
 fn main() {
     if !common::global_init() {
