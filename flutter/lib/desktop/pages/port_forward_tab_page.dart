@@ -57,7 +57,7 @@ class _PortForwardTabPageState extends State<PortForwardTabPage> {
     super.initState();
 
     rustDeskWinManager.setMethodHandler((call, fromWindowId) async {
-      println!(
+      print(
           "[Port Forward] call ${call.method} with args ${call.arguments} from window $fromWindowId");
       // for simplify, just replace connectionId
       if (call.method == kWindowEventNewPortForward) {
@@ -67,7 +67,7 @@ class _PortForwardTabPageState extends State<PortForwardTabPage> {
         windowOnTop(windowId());
         if (tabController.state.value.tabs.indexWhere((e) => e.key == id) >=
             0) {
-          println!("port forward $id exists");
+          print("port forward $id exists");
           return;
         }
         tabController.add(TabInfo(

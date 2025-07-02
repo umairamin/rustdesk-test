@@ -149,7 +149,7 @@ class GroupModel {
       } while (current * pageSize < total);
       return true;
     } catch (err) {
-      println!('get accessible device groups: $err');
+      print('get accessible device groups: $err');
       // old hbbs doesn't support this api
       // groupLoadError.value =
       //     '${translate('pull_group_failed_tip')}: ${translate(err.toString())}';
@@ -214,7 +214,7 @@ class GroupModel {
       } while (current * pageSize < total);
       return true;
     } catch (err) {
-      println!('get accessible users: $err');
+      print('get accessible users: $err');
       groupLoadError.value =
           '${translate('pull_group_failed_tip')}: ${translate(err.toString())}';
     }
@@ -274,7 +274,7 @@ class GroupModel {
       } while (current * pageSize < total);
       return true;
     } catch (err) {
-      println!('get accessible peers: $err');
+      print('get accessible peers: $err');
       groupLoadError.value =
           '${translate('pull_group_failed_tip')}: ${translate(err.toString())}';
     }
@@ -304,7 +304,7 @@ class GroupModel {
       });
       bind.mainSaveGroup(json: jsonEncode(map));
     } catch (e) {
-      println!('group save:$e');
+      print('group save:$e');
     }
   }
 
@@ -338,7 +338,7 @@ class GroupModel {
         _callbackPeerUpdate();
       }
     } catch (e) {
-      println!("load group cache: $e");
+      print("load group cache: $e");
     }
   }
 

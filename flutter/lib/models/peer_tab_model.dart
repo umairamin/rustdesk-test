@@ -82,7 +82,7 @@ class PeerTabModel with ChangeNotifier {
         }
       }
     } catch (e) {
-      println!("failed to get peer tab visible list:$e");
+      print("failed to get peer tab visible list:$e");
     }
     // order
     try {
@@ -106,7 +106,7 @@ class PeerTabModel with ChangeNotifier {
         }
       }
     } catch (e) {
-      println!("failed to get peer tab order list: $e");
+      print("failed to get peer tab order list: $e");
     }
     // init currentTab
     _currentTab =

@@ -22,12 +22,12 @@ class TerminalConnectionManager {
     if (existingFfi != null && !existingFfi.closed) {
       // Increment reference count
       _connectionRefCount[peerId] = (_connectionRefCount[peerId] ?? 0) + 1;
-      println!('[TerminalConnectionManager] Reusing existing connection for peer $peerId. Reference count: ${_connectionRefCount[peerId]}');
+      print('[TerminalConnectionManager] Reusing existing connection for peer $peerId. Reference count: ${_connectionRefCount[peerId]}');
       return existingFfi;
     }
 
     // Create new FFI instance for first terminal
-    println!('[TerminalConnectionManager] Creating new terminal connection for peer $peerId');
+    print('[TerminalConnectionManager] Creating new terminal connection for peer $peerId');
     final ffi = FFI(null);
     ffi.start(
       peerId,
@@ -44,20 +44,20 @@ class TerminalConnectionManager {
     // Register the FFI instance with Get for dependency injection
     Get.put<FFI>(ffi, tag: 'terminal_$peerId');
     
-    println!('[TerminalConnectionManager] New connection created. Total connections: ${_connections.length}');
+    print('[TerminalConnectionManager] New connection created. Total connections: ${_connections.length}');
     return ffi;
   }
 
   /// Release a connection reference
   static void releaseConnection(String peerId) {
     final refCount = _connectionRefCount[peerId] ?? 0;
-    println!('[TerminalConnectionManager] Releasing connection for peer $peerId. Current ref count: $refCount');
+    print('[TerminalConnectionManager] Releasing connection for peer $peerId. Current ref count: $refCount');
     
     if (refCount <= 1) {
       // Last reference, close the connection
       final ffi = _connections[peerId];
       if (ffi != null) {
-        println!('[TerminalConnectionManager] Closing connection for peer $peerId (last reference)');
+        print('[TerminalConnectionManager] Closing connection for peer $peerId (last reference)');
         ffi.close();
         _connections.remove(peerId);
         _connectionRefCount.remove(peerId);
@@ -66,7 +66,7 @@ class TerminalConnectionManager {
     } else {
       // Decrement reference count
       _connectionRefCount[peerId] = refCount - 1;
-      println!('[TerminalConnectionManager] Connection still in use. New ref count: ${_connectionRefCount[peerId]}');
+      print('[TerminalConnectionManager] Connection still in use. New ref count: ${_connectionRefCount[peerId]}');
     }
   }
 
@@ -93,6 +93,6 @@ class TerminalConnectionManager {
   /// Set service ID for a peer
   static void setServiceId(String peerId, String serviceId) {
     _serviceIds[peerId] = serviceId;
-    println!('[TerminalConnectionManager] Service ID for $peerId: $serviceId');
+    print('[TerminalConnectionManager] Service ID for $peerId: $serviceId');
   }
 }

@@ -158,7 +158,7 @@ class LoginRequest {
     try {
       deviceInfo = jsonDecode(bind.mainGetLoginDeviceInfo());
     } catch (e) {
-      println!('Failed to decode get device info: $e');
+      print('Failed to decode get device info: $e');
     }
     data['deviceInfo'] = deviceInfo;
     return data;

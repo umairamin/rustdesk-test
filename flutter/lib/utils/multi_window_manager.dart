@@ -453,7 +453,7 @@ class RustDeskMultiWindowManager {
     try {
       windows = _findWindowsByType(type);
     } catch (e) {
-      println!('Failed to getAllSubWindowIds of $type, $e');
+      print('Failed to getAllSubWindowIds of $type, $e');
       return;
     }
 
@@ -461,14 +461,14 @@ class RustDeskMultiWindowManager {
       return;
     }
     for (final wId in windows) {
-      println!("closing multi window, type: ${type.toString()} id: $wId");
+      print("closing multi window, type: ${type.toString()} id: $wId");
       await saveWindowPosition(type, windowId: wId);
       try {
         await WindowController.fromWindowId(wId).setPreventClose(false);
         await WindowController.fromWindowId(wId).close();
         _activeWindows.remove(wId);
       } catch (e) {
-        println!("$e");
+        print("$e");
         return;
       }
     }

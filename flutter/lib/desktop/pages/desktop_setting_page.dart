@@ -1787,7 +1787,7 @@ class _DisplayState extends State<_Display> {
             onChanged: isOptFixed ? null : onChanged));
       }
     } catch (e) {
-      println!("failed to parse supported hwdecodings, err=$e");
+      print("failed to parse supported hwdecodings, err=$e");
     }
     return _Card(title: 'Default Codec', children: [
       _Radio(context,
@@ -1820,7 +1820,7 @@ class _DisplayState extends State<_Display> {
     try {
       privacyModeImpls = jsonDecode(supportedPrivacyModeImpls);
     } catch (e) {
-      println!('failed to parse supported privacy mode impls, err=$e');
+      print('failed to parse supported privacy mode impls, err=$e');
       return Offstage();
     }
     if (privacyModeImpls.length < 2) {

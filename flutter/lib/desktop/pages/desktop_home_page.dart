@@ -761,7 +761,7 @@ class _DesktopHomePageState extends State<DesktopHomePage>
         };
 
     rustDeskWinManager.setMethodHandler((call, fromWindowId) async {
-      println!(
+      print(
           "[Main] call ${call.method} with args ${call.arguments} from window $fromWindowId");
       if (call.method == kWindowMainWindowOnTop) {
         windowOnTop(null);
@@ -799,13 +799,13 @@ class _DesktopHomePageState extends State<DesktopHomePage>
         try {
           windowId = int.parse(args[0]);
         } catch (e) {
-          println!("Failed to parse window id '${call.arguments}': $e");
+          print("Failed to parse window id '${call.arguments}': $e");
         }
         WindowType? windowType;
         try {
           windowType = WindowType.values.byName(args[3]);
         } catch (e) {
-          println!("Failed to parse window type '${call.arguments}': $e");
+          print("Failed to parse window type '${call.arguments}': $e");
         }
         if (windowId != null && windowType != null) {
           await rustDeskWinManager.moveTabToNewWindow(

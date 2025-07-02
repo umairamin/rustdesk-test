@@ -75,7 +75,7 @@ void changeIdDialog() {
 
   gFFI.dialogManager.show((setState, close, context) {
     submit() async {
-      println!("onSubmit");
+      print("onSubmit");
       newId = controller.text.trim();
 
       final Iterable violations = rules.where((r) => !r.validate(newId));
@@ -1567,7 +1567,7 @@ customImageQualityDialog(SessionID sessionId, String id, FFI ffi) async {
           versionCmp(ffi.ffiModel.pi.version, '1.2.2') < 0;
 
   setCustomValues({double? quality, double? fps}) async {
-    println!("setCustomValues quality:$quality, fps:$fps");
+    print("setCustomValues quality:$quality, fps:$fps");
     if (quality != null) {
       qualitySet = true;
       await bind.sessionSetCustomImageQuality(
@@ -2088,7 +2088,7 @@ void addPeersToAbDialog(
     names.remove(currentName.value);
   }
   if (names.isEmpty) {
-    println!('no address book to add peers to, should not happen');
+    print('no address book to add peers to, should not happen');
     return;
   }
   if (!names.contains(currentName.value)) {

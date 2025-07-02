@@ -39,7 +39,7 @@ class CustomTouchGestureRecognizer extends ScaleGestureRecognizer {
   Timer? _debounceTimer;
 
   void _init() {
-    println!("CustomTouchGestureRecognizer init");
+    print("CustomTouchGestureRecognizer init");
     // onStart = (d) {};
     onUpdate = (d) {
       _debounceTimer?.cancel();
@@ -55,7 +55,7 @@ class CustomTouchGestureRecognizer extends ScaleGestureRecognizer {
           onThreeFingerVerticalDragStart!(
               DragStartDetails(globalPosition: d.localFocalPoint));
         }
-        println!("start threeFingerScale");
+        print("start threeFingerScale");
       }
       if (_currentState != GestureState.none) {
         switch (_currentState) {
@@ -81,24 +81,24 @@ class CustomTouchGestureRecognizer extends ScaleGestureRecognizer {
       }
     };
     onEnd = (d) {
-      println!("ScaleGestureRecognizer onEnd");
+      print("ScaleGestureRecognizer onEnd");
       _debounceTimer?.cancel();
       // end
       switch (_currentState) {
         case GestureState.oneFingerPan:
-          println!("OneFingerState.pan onEnd");
+          print("OneFingerState.pan onEnd");
           if (onOneFingerPanEnd != null) {
             onOneFingerPanEnd!(_getDragEndDetails(d));
           }
           break;
         case GestureState.twoFingerScale:
-          println!("TwoFingerState.scale onEnd");
+          print("TwoFingerState.scale onEnd");
           if (onTwoFingerScaleEnd != null) {
             onTwoFingerScaleEnd!(d);
           }
           break;
         case GestureState.threeFingerVerticalDrag:
-          println!("ThreeFingerState.vertical onEnd");
+          print("ThreeFingerState.vertical onEnd");
           if (onThreeFingerVerticalDragEnd != null) {
             onThreeFingerVerticalDragEnd!(_getDragEndDetails(d));
           }
@@ -126,11 +126,11 @@ class CustomTouchGestureRecognizer extends ScaleGestureRecognizer {
     if (_currentState != GestureState.none) {
       _debounceTimer = Timer(Duration(milliseconds: 200), () {
         start(d);
-        println!("debounce start oneFingerPan");
+        print("debounce start oneFingerPan");
       });
     } else {
       start(d);
-      println!("start oneFingerPan");
+      print("start oneFingerPan");
     }
   }
 
@@ -146,11 +146,11 @@ class CustomTouchGestureRecognizer extends ScaleGestureRecognizer {
     if (_currentState == GestureState.threeFingerVerticalDrag) {
       _debounceTimer = Timer(Duration(milliseconds: 200), () {
         start(d);
-        println!("debounce start twoFingerScale");
+        print("debounce start twoFingerScale");
       });
     } else {
       start(d);
-      println!("start twoFingerScale");
+      print("start twoFingerScale");
     }
   }
 
@@ -272,7 +272,7 @@ class HoldTapMoveGestureRecognizer extends GestureRecognizer {
           // first tap move
           _reject(tracker);
         } else if (_secondTap != null && _secondTap!.pointer == event.pointer) {
-          // println!("_secondTap move");
+          // print("_secondTap move");
           // second tap move
           if (!_isStart) {
             _resolve();
@@ -328,7 +328,7 @@ class HoldTapMoveGestureRecognizer extends GestureRecognizer {
       _freezeTracker(tracker);
       _reset();
     } catch (e) {
-      println!("Failed to _reject:$e");
+      print("Failed to _reject:$e");
     }
   }
 
@@ -340,7 +340,7 @@ class HoldTapMoveGestureRecognizer extends GestureRecognizer {
 
   void _reset() {
     _isStart = false;
-    // println!("reset");
+    // print("reset");
     _stopFirstTapUpTimer();
     _stopSecondTapDownTimer();
     if (_firstTap != null) {
@@ -476,7 +476,7 @@ class DoubleFinerTapGestureRecognizer extends GestureRecognizer {
 
   @override
   void addAllowedPointer(PointerDownEvent event) {
-    println!("addAllowedPointer");
+    print("addAllowedPointer");
     if (_isStart) {
       // second
       if (onDoubleFinerTapDown != null) {
@@ -505,7 +505,7 @@ class DoubleFinerTapGestureRecognizer extends GestureRecognizer {
       gestureSettings: gestureSettings,
     );
     _trackers[event.pointer] = tracker;
-    // println!("_trackers:$_trackers");
+    // print("_trackers:$_trackers");
     tracker.startTrackingPointer(_handleEvent, event.transform);
 
     _registerTap(tracker);
@@ -514,7 +514,7 @@ class DoubleFinerTapGestureRecognizer extends GestureRecognizer {
   void _handleEvent(PointerEvent event) {
     final _TapTracker tracker = _trackers[event.pointer]!;
     if (event is PointerUpEvent) {
-      println!("PointerUpEvent");
+      print("PointerUpEvent");
       _upTap.add(tracker.pointer);
     } else if (event is PointerMoveEvent) {
       if (!tracker.isWithinGlobalTolerance(event, kDoubleTapTouchSlop)) {

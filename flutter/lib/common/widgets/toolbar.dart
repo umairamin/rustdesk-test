@@ -424,7 +424,7 @@ Future<List<TRadioMenu<String>>> toolbarCodec(
     codecs.add(h264);
     codecs.add(h265);
   } catch (e) {
-    println!("Show Codec Preference err=$e");
+    print("Show Codec Preference err=$e");
   }
   final visible =
       codecs.length == 4 && (codecs[0] || codecs[1] || codecs[2] || codecs[3]);

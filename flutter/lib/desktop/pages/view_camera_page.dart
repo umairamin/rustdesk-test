@@ -229,7 +229,7 @@ class _ViewCameraPageState extends State<ViewCameraPage>
 
     // https://github.com/flutter/flutter/issues/64935
     super.dispose();
-    println!("VIEW CAMERA PAGE dispose session $sessionId ${widget.id}");
+    print("VIEW CAMERA PAGE dispose session $sessionId ${widget.id}");
     _ffi.textureModel.onViewCameraPageDispose(closeSession);
     if (closeSession) {
       // ensure we leave this session, this is a double check
@@ -438,7 +438,7 @@ class _ViewCameraPageState extends State<ViewCameraPage>
         // handle this inconsistent status by setting `_isWindowBlur` to false. So we can
         // ensure the grab-key thread is running when our users are clicking the remote canvas.
         if (_isWindowBlur) {
-          println!(
+          print(
               "Unexpected status: onPointerDown is triggered while the remote window is in blur status");
           _isWindowBlur = false;
         }

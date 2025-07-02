@@ -23,7 +23,7 @@ MouseCursor buildCursorOfCache(
       if (data == null) {
         return MouseCursor.defer;
       }
-      println!(
+      print(
           "Register custom cursor with key $key (${cache.hotx},${cache.hoty})");
       // [Safety]
       // It's ok to call async registerCursor in current synchronous context,

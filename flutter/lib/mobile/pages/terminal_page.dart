@@ -35,7 +35,7 @@ class _TerminalPageState extends State<TerminalPage>
   void initState() {
     super.initState();
 
-    println!(
+    print(
         '[TerminalPage] Initializing terminal ${widget.terminalId} for peer ${widget.id}');
 
     // Use shared FFI instance from connection manager
@@ -49,7 +49,7 @@ class _TerminalPageState extends State<TerminalPage>
 
     // Create terminal model with specific terminal ID
     _terminalModel = TerminalModel(_ffi, widget.terminalId);
-    println!(
+    print(
         '[TerminalPage] Terminal model created for terminal ${widget.terminalId}');
 
     // Register this terminal model with FFI for event routing

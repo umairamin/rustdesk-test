@@ -50,7 +50,7 @@ class _TerminalPageState extends State<TerminalPage>
 
     // Create terminal model with specific terminal ID
     _terminalModel = TerminalModel(_ffi, widget.terminalId);
-    println!(
+    print(
         '[TerminalPage] Terminal model created for terminal ${widget.terminalId}');
 
     // Register this terminal model with FFI for event routing

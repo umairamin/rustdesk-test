@@ -836,7 +836,7 @@ class RustdeskImpl {
           .map((e) => e.toString())
           .toList();
     } catch (e) {
-      println!('Failed to load favs: $e');
+      print('Failed to load favs: $e');
     }
     return Future.value(favs);
   }

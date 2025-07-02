@@ -370,7 +370,7 @@ class _ViewCameraTabPageState extends State<ViewCameraTabPage> {
       RemoteCountState.find().value = tabController.length;
 
   Future<dynamic> _remoteMethodHandler(call, fromWindowId) async {
-    println!(
+    print(
         "[View Camera Page] call ${call.method} with args ${call.arguments} from window $fromWindowId");
 
     dynamic returnValue;
@@ -460,7 +460,7 @@ class _ViewCameraTabPageState extends State<ViewCameraTabPage> {
             .page as ViewCameraPage;
         returnValue = viewCameraPage.ffi.ffiModel.cachedPeerData.toString();
       } catch (e) {
-        println!('Failed to get cached session data: $e');
+        print('Failed to get cached session data: $e');
       }
       if (close && returnValue != null) {
         closeSessionOnDispose[id] = false;
@@ -477,7 +477,7 @@ class _ViewCameraTabPageState extends State<ViewCameraTabPage> {
         try {
           frame = await wc.getFrame();
         } catch (e) {
-          println!(
+          print(
               "Failed to get frame of window $windowId, it may be hidden");
         }
         if (frame != null) {

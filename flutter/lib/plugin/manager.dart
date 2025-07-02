@@ -205,7 +205,7 @@ class PluginManager with ChangeNotifier {
     } else if (evt['plugin_uninstall'] != null && evt['id'] != null) {
       _handlePluginUninstall(evt['id'], evt['plugin_uninstall']);
     } else {
-      println!('Failed to handle manager event: $evt');
+      print('Failed to handle manager event: $evt');
     }
   }
 
@@ -232,14 +232,14 @@ class PluginManager with ChangeNotifier {
         _plugins.add(plugin);
       }
     } catch (e) {
-      println!('Failed to decode $e,  plugin list \'$pluginList\'');
+      print('Failed to decode $e,  plugin list \'$pluginList\'');
     }
     _sortPlugins();
     notifyListeners();
   }
 
   void _handlePluginInstall(String id, String msg) {
-    println!('Plugin \'$id\' install msg $msg');
+    print('Plugin \'$id\' install msg $msg');
     for (var i = 0; i < _plugins.length; i++) {
       if (_plugins[i].meta.id == id) {
         _plugins[i].setInstall(msg);
@@ -251,7 +251,7 @@ class PluginManager with ChangeNotifier {
   }
 
   void _handlePluginUninstall(String id, String msg) {
-    println!('Plugin \'$id\' uninstall msg $msg');
+    print('Plugin \'$id\' uninstall msg $msg');
     for (var i = 0; i < _plugins.length; i++) {
       if (_plugins[i].meta.id == id) {
         _plugins[i].setUninstall(msg);

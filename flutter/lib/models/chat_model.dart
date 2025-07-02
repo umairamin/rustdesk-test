@@ -347,7 +347,7 @@ class ChatModel with ChangeNotifier {
   receive(int id, String text) async {
     final session = parent.target;
     if (session == null) {
-      println!("Failed to receive msg, session state is null");
+      print("Failed to receive msg, session state is null");
       return;
     }
     if (text.isEmpty) return;
@@ -363,7 +363,7 @@ class ChatModel with ChangeNotifier {
           ?.peerId;
     }
     if (peerId == null) {
-      println!("Failed to receive msg, peerId is null");
+      print("Failed to receive msg, peerId is null");
       return;
     }
 
@@ -408,7 +408,7 @@ class ChatModel with ChangeNotifier {
       final client = session.serverModel.clients
           .firstWhereOrNull((client) => client.id == id);
       if (client == null) {
-        println!("Failed to receive msg, client is null");
+        print("Failed to receive msg, client is null");
         return;
       }
       if (isDesktop) {

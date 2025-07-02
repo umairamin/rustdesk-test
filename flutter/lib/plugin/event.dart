@@ -9,7 +9,7 @@ void handlePluginEvent(
   try {
     content = json.decode(evt['content']);
   } catch (e) {
-    println!(
+    print(
         'Json decode plugin event content failed: $e, ${evt['content']}');
   }
   if (content?['t'] == 'MsgBox') {

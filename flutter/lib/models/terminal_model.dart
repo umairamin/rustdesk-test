@@ -31,10 +31,10 @@ class TerminalModel with ChangeNotifier {
           data: data,
         );
       } catch (e) {
-        println!('[TerminalModel] Error sending terminal input: $e');
+        print('[TerminalModel] Error sending terminal input: $e');
       }
     } else {
-      println!('[TerminalModel] Terminal not opened yet, buffering input');
+      print('[TerminalModel] Terminal not opened yet, buffering input');
       _inputBuffer.add(data);
     }
   }
@@ -49,7 +49,7 @@ class TerminalModel with ChangeNotifier {
     terminal.onResize = (w, h, pw, ph) async {
       // Validate all dimensions before using them
       if (w > 0 && h > 0 && pw > 0 && ph > 0) {
-        println!(
+        print(
             '[TerminalModel] Terminal resized to ${w}x$h (pixel: ${pw}x$ph)');
         if (_terminalOpened) {
           // Notify remote terminal of resize
@@ -61,11 +61,11 @@ class TerminalModel with ChangeNotifier {
               cols: w,
             );
           } catch (e) {
-            println!('[TerminalModel] Error resizing terminal: $e');
+            print('[TerminalModel] Error resizing terminal: $e');
           }
         }
       } else {
-        println!(
+        print(
             '[TerminalModel] Invalid terminal dimensions: ${w}x$h (pixel: ${pw}x$ph)');
       }
     };
@@ -76,7 +76,7 @@ class TerminalModel with ChangeNotifier {
 
     // Fire and forget - don't block onReady
     openTerminal().catchError((e) {
-      println!('[TerminalModel] Error opening terminal: $e');
+      print('[TerminalModel] Error opening terminal: $e');
     });
   }
 
@@ -96,7 +96,7 @@ class TerminalModel with ChangeNotifier {
       cols = terminal.viewWidth;
     }
 
-    println!(
+    print(
         '[TerminalModel] Opening terminal $terminalId, sessionId: ${parent.sessionId}, size: ${cols}x$rows');
     try {
       await bind
@@ -113,9 +113,9 @@ class TerminalModel with ChangeNotifier {
               'sessionOpenTerminal timed out after 5 seconds');
         },
       );
-      println!('[TerminalModel] sessionOpenTerminal called successfully');
+      print('[TerminalModel] sessionOpenTerminal called successfully');
     } catch (e) {
-      println!('[TerminalModel] Error calling sessionOpenTerminal: $e');
+      print('[TerminalModel] Error calling sessionOpenTerminal: $e');
       // Optionally show error to user
       if (e is TimeoutException) {
         terminal.write('Failed to open terminal: Connection timeout\r\n');
@@ -138,9 +138,9 @@ class TerminalModel with ChangeNotifier {
                 'sessionCloseTerminal timed out after 3 seconds');
           },
         );
-        println!('[TerminalModel] sessionCloseTerminal called successfully');
+        print('[TerminalModel] sessionCloseTerminal called successfully');
       } catch (e) {
-        println!('[TerminalModel] Error calling sessionCloseTerminal: $e');
+        print('[TerminalModel] Error calling sessionCloseTerminal: $e');
         // Continue with cleanup even if close fails
       }
       _terminalOpened = false;
@@ -154,7 +154,7 @@ class TerminalModel with ChangeNotifier {
 
     // Only handle events for this terminal
     if (evtTerminalId != terminalId) {
-      println!(
+      print(
           '[TerminalModel] Ignoring event for terminal $evtTerminalId (not mine)');
       return;
     }
@@ -180,7 +180,7 @@ class TerminalModel with ChangeNotifier {
     final String message = evt['message'] ?? '';
     final String? serviceId = evt['service_id'];
 
-    println!(
+    print(
         '[TerminalModel] Terminal opened response: success=$success, message=$message, service_id=$serviceId');
 
     if (success) {
@@ -192,7 +192,7 @@ class TerminalModel with ChangeNotifier {
       _processBufferedInputAsync().then((_) {
         notifyListeners();
       }).catchError((e) {
-        println!('[TerminalModel] Error processing buffered input: $e');
+        print('[TerminalModel] Error processing buffered input: $e');
         notifyListeners();
       });
     } else {
@@ -212,7 +212,7 @@ class TerminalModel with ChangeNotifier {
           data: data,
         );
       } catch (e) {
-        println!('[TerminalModel] Error sending buffered input: $e');
+        print('[TerminalModel] Error sending buffered input: $e');
       }
     }
   }
@@ -236,13 +236,13 @@ class TerminalModel with ChangeNotifier {
           // Handle if data comes as byte array
           text = utf8.decode(List<int>.from(data));
         } else {
-          println!('[TerminalModel] Unknown data type: ${data.runtimeType}');
+          print('[TerminalModel] Unknown data type: ${data.runtimeType}');
           return;
         }
 
         terminal.write(text);
       } catch (e) {
-        println!('[TerminalModel] Failed to process terminal data: $e');
+        print('[TerminalModel] Failed to process terminal data: $e');
       }
     }
   }

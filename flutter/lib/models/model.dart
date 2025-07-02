@@ -94,7 +94,7 @@ class CachedPeerData {
       data.direct = map['direct'];
       return data;
     } catch (e) {
-      println!('Failed to parse CachedPeerData: $e');
+      print('Failed to parse CachedPeerData: $e');
       return null;
     }
   }
@@ -205,7 +205,7 @@ class FfiModel with ChangeNotifier {
     if (parent.target?.connType == ConnType.defaultConn) {
       KeyboardEnabledState.find(id).value = _permissions['keyboard'] != false;
     }
-    println!('updatePermission: $_permissions');
+    print('updatePermission: $_permissions');
     notifyListeners();
   }
 
@@ -424,7 +424,7 @@ class FfiModel with ChangeNotifier {
       } else if (name == 'screenshot') {
         _handleScreenshot(evt, sessionId, peerId);
       } else {
-        println!('Event is not handled in the fixed branch: $name');
+        print('Event is not handled in the fixed branch: $name');
       }
     };
   }
@@ -698,7 +698,7 @@ class FfiModel with ChangeNotifier {
     }
     switch (url) {
       case kUrlActionClose:
-        println!("closing all instances");
+        print("closing all instances");
         Future.microtask(() async {
           await rustDeskWinManager.closeAllSubWindows();
           windowManager.close();
@@ -1124,7 +1124,7 @@ class FfiModel with ChangeNotifier {
         try {
           _pi.platformAdditions = json.decode(platformAdditions);
         } catch (e) {
-          println!('Failed to decode platformAdditions $e');
+          print('Failed to decode platformAdditions $e');
         }
       }
     }
@@ -1262,7 +1262,7 @@ class FfiModel with ChangeNotifier {
       });
       _pi.resolutions = arr;
     } catch (e) {
-      println!("Failed to parse resolutions:$e");
+      print("Failed to parse resolutions:$e");
     }
   }
 
@@ -1374,7 +1374,7 @@ class FfiModel with ChangeNotifier {
           _pi.platformAdditions.remove(kPlatformAdditionsAmyuniVirtualDisplays);
         }
       } catch (e) {
-        println!('Failed to decode platformAdditions $e');
+        print('Failed to decode platformAdditions $e');
       }
     }
 
@@ -1510,7 +1510,7 @@ class ImageModel with ChangeNotifier {
         await decodeAndUpdate(display, rgba2);
       }
     } catch (e) {
-      println!('onRgba error: $e');
+      print('onRgba error: $e');
     }
     _webDecodingRgba = false;
   }
@@ -1519,7 +1519,7 @@ class ImageModel with ChangeNotifier {
     try {
       await decodeAndUpdate(display, rgba);
     } catch (e) {
-      println!('onRgba error: $e');
+      print('onRgba error: $e');
     }
     platformFFI.nextRgba(sessionId, display);
   }
@@ -2631,7 +2631,7 @@ class CursorModel with ChangeNotifier {
         // may throw exception, because the listener maybe already dispose
         notifyListeners();
       } catch (e) {
-        println!(
+        print(
             'WARNING: updateCursorId $_id, without notifyListeners(). $e');
       }
       return true;
@@ -2642,7 +2642,7 @@ class CursorModel with ChangeNotifier {
 
   updateCursorId(Map<String, dynamic> evt) {
     if (!_updateCurData()) {
-      println!(
+      print(
           'WARNING: updateCursorId $_id, cache is ${_cache == null ? "null" : "not null"}. without notifyListeners()');
     }
   }
@@ -2701,7 +2701,7 @@ class CursorModel with ChangeNotifier {
   _clearCache() {
     final keys = {...cachedKeys};
     for (var k in keys) {
-      println!("deleting cursor with key $k");
+      print("deleting cursor with key $k");
       deleteCustomCursor(k);
     }
     resetSystemCursor();
@@ -2989,7 +2989,7 @@ class FFI {
       );
     } else if (display != null) {
       if (displays == null) {
-        println!(
+        print(
             'Unreachable, failed to add existed session to $id, the displays is null while display is $display');
         return;
       }
@@ -2999,7 +2999,7 @@ class FFI {
           displays: Int32List.fromList(displays),
           isViewCamera: isViewCamera);
       if (addRes != '') {
-        println!(
+        print(
             'Unreachable, failed to add existed session to $id, $addRes');
         return;
       }
@@ -3057,12 +3057,12 @@ class FFI {
               tabWindowId, kWindowEventGetCachedSessionData, args);
           if (cachedData == null) {
             // unreachable
-            println!('Unreachable, the cached data is empty.');
+            print('Unreachable, the cached data is empty.');
             return;
           }
           final data = CachedPeerData.fromString(cachedData);
           if (data == null) {
-            println!('Unreachable, the cached data cannot be decoded.');
+            print('Unreachable, the cached data cannot be decoded.');
             return;
           }
           ffiModel.setPermissions(data.permissions);
@@ -3077,7 +3077,7 @@ class FFI {
         if (message is EventToUI_Event) {
           if (message.field0 == "close") {
             closed = true;
-            println!('Exit session event loop');
+            print('Exit session event loop');
             return;
           }
 
@@ -3085,7 +3085,7 @@ class FFI {
           try {
             event = json.decode(message.field0);
           } catch (e) {
-            println!('json.decode fail1(): $e, ${message.field0}');
+            print('json.decode fail1(): $e, ${message.field0}');
           }
           if (event != null) {
             await cb(event);
@@ -3108,10 +3108,10 @@ class FFI {
         } else if (message is EventToUI_Texture) {
           final display = message.field0;
           final gpuTexture = message.field1;
-          println!(
+          print(
               "EventToUI_Texture display:$display, gpuTexture:$gpuTexture");
           if (gpuTexture && !hasGpuTextureRender) {
-            println!('the gpuTexture is not supported.');
+            print('the gpuTexture is not supported.');
             return;
           }
           textureModel.setTextureType(display: display, gpuTexture: gpuTexture);
@@ -3184,7 +3184,7 @@ class FFI {
     if (closeSession) {
       await bind.sessionClose(sessionId: sessionId);
     }
-    println!('model $id closed');
+    print('model $id closed');
     id = '';
   }
 
@@ -3198,12 +3198,12 @@ class FFI {
 
   // Terminal model management
   void registerTerminalModel(int terminalId, TerminalModel model) {
-    println!('[FFI] Registering terminal model for terminal $terminalId');
+    print('[FFI] Registering terminal model for terminal $terminalId');
     _terminalModels[terminalId] = model;
   }
 
   void unregisterTerminalModel(int terminalId) {
-    println!('[FFI] Unregistering terminal model for terminal $terminalId');
+    print('[FFI] Unregistering terminal model for terminal $terminalId');
     _terminalModels.remove(terminalId);
   }
 

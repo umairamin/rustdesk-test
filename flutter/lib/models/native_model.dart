@@ -61,7 +61,7 @@ class PlatformFFI {
 
   bool registerEventHandler(
       String eventName, String handlerName, HandleEvent handler, {bool replace = false}) {
-    println!('registerEventHandler $eventName $handlerName');
+    print('registerEventHandler $eventName $handlerName');
     var handlers = _eventHandlers[eventName];
     if (handlers == null) {
       _eventHandlers[eventName] = {handlerName: handler};
@@ -77,7 +77,7 @@ class PlatformFFI {
   }
 
   void unregisterEventHandler(String eventName, String handlerName) {
-    println!('unregisterEventHandler $eventName $handlerName');
+    print('unregisterEventHandler $eventName $handlerName');
     var handlers = _eventHandlers[eventName];
     if (handlers != null) {
       handlers.remove(handlerName);
@@ -130,14 +130,14 @@ class PlatformFFI {
                 //
                 // isMacOS? DynamicLibrary.open("liblibrustdesk.dylib") :
                 DynamicLibrary.process();
-    println!('initializing FFI $_appType');
+    print('initializing FFI $_appType');
     try {
       _session_get_rgba = dylib.lookupFunction<F3Dart, F3>("session_get_rgba");
       try {
         // SYSTEM user failed
         _dir = (await getApplicationDocumentsDirectory()).path;
       } catch (e) {
-        println!('Failed to get documents directory: $e');
+        print('Failed to get documents directory: $e');
       }
       _ffiBind = RustdeskImpl(dylib);
 
@@ -197,10 +197,10 @@ class PlatformFFI {
         id = macOsInfo.systemGUID ?? '';
       }
       if (isAndroid || isIOS) {
-        println!(
+        print(
             '_appType:$_appType,info1-id:$id,info2-name:$name,dir:$_dir,homeDir:$_homeDir');
       } else {
-        println!(
+        print(
             '_appType:$_appType,info1-id:$id,info2-name:$name,dir:$_dir');
       }
       if (desktopType == DesktopType.cm) {
@@ -251,7 +251,7 @@ class PlatformFFI {
             }
           }
         } catch (e) {
-          println!('json.decode fail(): $e');
+          print('json.decode fail(): $e');
         }
       }();
     });
